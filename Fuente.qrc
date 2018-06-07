@@ -1,0 +1,21 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/LectorAlmacenDeDatos/main.qml</file>
+        <file>qml/LectorAlmacenDeDatos/Controles/BotonIns.qml</file>
+        <file>qml/LectorAlmacenDeDatos/Delegados/Delegate_ListaReclamos.qml</file>
+        <file>qml/LectorAlmacenDeDatos/ConsultasSql.js</file>
+        <file>qml/LectorAlmacenDeDatos/Controles/BotonFlecha.qml</file>
+        <file>qml/LectorAlmacenDeDatos/Delegados/Delegate_ListaTareas.qml</file>
+        <file>qml/LectorAlmacenDeDatos/BarraInferior.qml</file>
+        <file>qml/LectorAlmacenDeDatos/Controles/BotonSimple.qml</file>
+        <file>qml/LectorAlmacenDeDatos/PreviewReporte.qml</file>
+        <file>qml/LectorAlmacenDeDatos/Controles/CheckBox.qml</file>
+        <file>qml/LectorAlmacenDeDatos/Delegados/Delegate_ListaItemsSeleccionados.qml</file>
+        <file>qml/LectorAlmacenDeDatos/Controles/BotonBarraDeHerramientas.qml</file>
+        <file>qml/LectorAlmacenDeDatos/PreviewReclamo.qml</file>
+        <file>qml/LectorAlmacenDeDatos/Delegados/Delegate_ListaReclamosControl.qml</file>
+        <file>qml/LectorAlmacenDeDatos/Controles/ComboBoxCheckBox.qml</file>
+        <file>qml/LectorAlmacenDeDatos/ConfiguracionTiempoResolucion.qml</file>
+        <file>qml/LectorAlmacenDeDatos/Delegados/Delegate_ListaItemsConfiguracionTiempoResolucion.qml</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,21 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/LectorAlmacenDeDatos/Imagenes/FlechaAbajo.png</file>
+        <file>qml/LectorAlmacenDeDatos/Imagenes/Fondo.png</file>
+        <file>qml/LectorAlmacenDeDatos/Imagenes/FlechaDerecha.png</file>
+        <file>qml/LectorAlmacenDeDatos/Imagenes/FlechaIzquierda.png</file>
+        <file>qml/LectorAlmacenDeDatos/Imagenes/icono.png</file>
+        <file>qml/LectorAlmacenDeDatos/Imagenes/FlechaArriba.png</file>
+        <file>qml/LectorAlmacenDeDatos/Imagenes/FlechaAbajo16x16.png</file>
+        <file>qml/LectorAlmacenDeDatos/Imagenes/FlechaArriba16x16.png</file>
+        <file>qml/LectorAlmacenDeDatos/Imagenes/VistoOk.png</file>
+        <file>qml/LectorAlmacenDeDatos/Imagenes/CerrarLista.png</file>
+        <file>qml/LectorAlmacenDeDatos/Imagenes/Maximizar.png</file>
+        <file>qml/LectorAlmacenDeDatos/Imagenes/Restaurar.png</file>
+        <file>qml/LectorAlmacenDeDatos/Imagenes/arrow_up.png</file>
+        <file>qml/LectorAlmacenDeDatos/Imagenes/arrow_down.png</file>
+        <file>qml/LectorAlmacenDeDatos/Imagenes/Eliminar.png</file>
+        <file>qml/LectorAlmacenDeDatos/Imagenes/FondoFiltro.png</file>
+        <file>qml/LectorAlmacenDeDatos/Imagenes/FondoFiltro2.png</file>
+    </qresource>
+</RCC>

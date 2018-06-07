@@ -1,0 +1,359 @@
+/************************************************************************************************/
+/************************************************************************************************/
+/************************************************************************************************/
+/************************************************************************************************/
+/************************************************************************************************/
+/*************************** CONFIGURACIONES GENERALES ******************************************/
+.titulo{
+	font-size:16px;
+	text-shadow:1px 1px 1px #ccc;
+}
+
+	/* Decoracin de los links */
+	a:link {background-color:#f1e9df;color:"#423c7a";text-decoration: none;}
+	a:visited {background-color:#f1e9df;color:"#423c7a";text-decoration: none;}
+	a:hover {background-color:#f1e9df;text-decoration: none;}
+	a:active {background-color:#f1e9df;color:"#423c7a";text-decoration: none;}
+
+*{
+	/* Fondo que aparece como rectngulo detras de los reclamos*/
+	margin:0px;
+	padding:0px;
+	background:#e6e6e6;
+}
+
+body{
+	/* Fondo general */
+	text-align:center;
+	/*background:#F6F6F6;*/ /*Color original del fondo*/
+	background:#e6e6e6;
+}
+
+header{
+	text-shadow: rgb(150,150,150) 3px 3px 5px;
+	background:#e6e6e6;
+	border:0px;
+	padding:8px;
+	border-bottom:2px solid #999999;
+	font:bold 20px arial,sans-serif,verdana,ubuntu;
+}
+
+footer{
+	background:#e6e6e6;
+	border:0px;
+	padding:30px;
+	border-top:2px solid #999999;
+}
+
+section{
+	background:#F6F6F6;
+}
+
+table{
+	width:90%;
+	margin:20px auto;
+	border-left:3px solid #999999;
+	border-right:3px solid #999999;
+	border-top:3px solid #999999;
+	border-bottom:3px solid #999999;
+	border-radius:5px;
+	box-shadow: rgb(150,150,150) 5px 5px;
+	font-style: normal;
+	border-collapse:separate;
+	background:#e6e6e6;
+}
+
+thead th{
+	/* Cabezal del resumen principal */
+	font:bold 13px arial,sans-serif,verdana,ubuntu;
+	padding:5px 5px 5px 5px;
+	color:#fff;
+	background-color:#222;
+	box-shadow:0px -1px 4px #000;
+}
+
+tfoot th{
+	font: bold 13px arial,sans-serif,verdana,ubuntu;
+	padding:1px 5px 1px 5px;
+	color:#fff;
+	background-color:#db4d4d;
+	box-shadow:0px -1px 4px #000;
+}
+
+tbody th{
+	padding:4px;
+	color:#333;
+	background-color:#f9f9f9;
+}
+
+
+/************************************************************************************************/
+/************************************************************************************************/
+/************************************************************************************************/
+/************************************************************************************************/
+/************************************************************************************************/
+/*************************** CONFIGURACIONES ESPECIFICAS ****************************************/
+
+
+
+/************************************************************************************************/
+/*************************** CABEZAL DEL REPORTE ************************************************/
+.listaClientesCabezal{
+        /* Nombre del cliente que aparece en el cabezal de la hoja principal*/
+        font-size:16px;
+        text-shadow:1px 1px 1px #ccc;
+}
+.aniosYMeses{
+        /* Perodo de tiempo que aparece en el cabezal de la hoja principal*/
+        color:#4e5475;
+        text-shadow:0px 0px 0px #ccc;
+        font-size:16px;
+}
+
+
+/************************************************************************************************/
+/*************************** RESUMEN PRINCIPAL **************************************************/
+.cabeceraTablaResumenPrincipal{
+        font-size:14px;
+        background:#423c7a;
+        text-transform:uppercase;
+}
+.columnaClienteSucursalResumenPrincipal{
+	/* Fondo de las celdas que indican la sucursal en el resumen principal*/
+	font-style: normal;
+	background:#423c7a;
+	text-align:left;
+	color:#ffffff;
+	font:verdana7;
+}
+.formatoFilaIntercalada1_ResumenPrincipal{
+        background-color: #f9f9f9;
+        color:#423c7a;
+        vertical-Align:middle;
+}
+.formatoFilaIntercalada2_ResumenPrincipal{
+        background-color: #eef0f5;
+        color:#423c7a;
+        vertical-Align:middle;
+}
+.pieTotalResumenPrincipal{
+        background:#423c7a;
+        text-transform:uppercase;
+        font-size:14px;
+}
+
+
+/************************************************************************************************/
+/*************************** CUADRO DE TIEMPOS **************************************************/
+.cabeceraCuadroTiempos{
+        font-size:14px;
+        background:#423c7a;
+        text-transform:uppercase;
+}
+.formatoFilaIntercalada1_CuadroTiempos{
+        background-color: #f9f9f9;
+        color:#423c7a;
+        vertical-Align:middle;
+}
+.formatoFilaIntercalada2_CuadroTiempos{
+        background-color: #eef0f5;
+        color:#423c7a;
+        vertical-Align:middle;
+}
+.formatoInformacionPie_CuadroTiempos{
+        font-size:10px;
+        background-color: #e6e6e6;
+        color:#423c7a;
+        vertical-Align:left;
+        border: 0px solid black;
+        border-bottom:1px dotted #999999;
+        border-radius:0px;
+}
+
+
+/************************************************************************************************/
+/*************************** CUADRO DE CAUSAS EXTERNAS SOFTWARE *********************************/
+.cabeceraCuadroCausasExternasSoftware{
+        font-size:14px;
+        background:#423c7a;
+        text-transform:uppercase;
+}
+.formatoColumna1_FilaIntercalada1_CausaExternaSoftware{
+        background-color: #f9f9f9;
+        color:#423c7a;
+        vertical-Align:middle;
+        text-align:left;
+}
+.formatoColumna1_FilaIntercalada2_CausaExternaSoftware{
+        background-color: #eef0f5;
+        color:#423c7a;
+        vertical-Align:middle;
+        text-align:left;
+}
+.formatoFilaIntercalada1_CausaExternaSoftware{
+        background-color: #f9f9f9;
+        color:#423c7a;
+        vertical-Align:middle;
+}
+.formatoFilaIntercalada2_CausaExternaSoftware{
+        background-color: #eef0f5;
+        color:#423c7a;
+        vertical-Align:middle;
+}
+.pieTotalCuadroCausasExternasSoftware{
+        background:#423c7a;
+        text-transform:uppercase;
+        font-size:14px;
+}
+
+
+/************************************************************************************************/
+/*************************** CUADRO DE CAUSAS EXTERNAS HARDWARE *********************************/
+.cabeceraCuadroCausasExternasHardware{
+        font-size:14px;
+        background:#423c7a;
+        text-transform:uppercase;
+}
+.formatoColumna1_FilaIntercalada1_CausaExternaHardware{
+        background-color: #f9f9f9;
+        color:#423c7a;
+        vertical-Align:middle;
+        text-align:left;
+}
+.formatoColumna1_FilaIntercalada2_CausaExternaHardware{
+        background-color: #eef0f5;
+        color:#423c7a;
+        vertical-Align:middle;
+        text-align:left;
+}
+.formatoFilaIntercalada1_CausaExternaHardware{
+        background-color: #f9f9f9;
+        color:#423c7a;
+        vertical-Align:middle;
+}
+.formatoFilaIntercalada2_CausaExternaHardware{
+        background-color: #eef0f5;
+        color:#423c7a;
+        vertical-Align:middle;
+}
+.pieTotalCuadroCausasExternasHardware{
+        background:#423c7a;
+        text-transform:uppercase;
+        font-size:14px;
+}
+
+
+/************************************************************************************************/
+/*************************** CUADRO CON DETALLE DE CAUSAS EXTERNAS ******************************/
+.formatoSection_detalleCausasExternas{
+        background:#e6e6e6;
+}
+.formatoArticle_detalleCausasExternas{
+        background:#e6e6e6;
+}
+.formatoTabla_detalleCausasExternas{
+        border: 0px;
+        background:#e6e6e6;
+        border-left:0px ;
+        border-right:0px ;
+        border-top:0px ;
+        border-bottom:0px;
+        border-radius:0px;
+        box-shadow: rgb(150,150,150) 0px 0px;
+        font-style: normal;
+        border-collapse:separate;
+}
+.formatoCabezalTabla_detalleCausasExternas{
+        border: 0px;
+        background:#e6e6e6;
+        border-left:0px ;
+        border-right:0px ;
+        border-top:0px ;
+        border-bottom:0px dotted #999999;
+        border-radius:0px;
+        box-shadow: rgb(150,150,150) 0px 0px;
+        font-style: normal;
+        border-collapse:separate;
+}
+.formatoFilaCabezalTabla_detalleCausasExternas{
+        border: 0px;
+        background:#e6e6e6;
+        border-left:0px ;
+        border-right:0px ;
+        border-top:0px ;
+        border-bottom:0px dotted #999999;
+        border-radius:0px;
+        box-shadow: rgb(150,150,150) 0px 0px;
+        font-style: normal;
+        border-collapse:separate;
+}
+.cabeceraTabla_detalleCausasExternas{
+        font-size:10px;
+        background:#e6e6e6;
+        color:black;
+        border: 0px;
+        border-left:0px ;
+        border-right:0px ;
+        border-top:0px ;
+        border-bottom:0px;
+        border-radius:0px;
+        box-shadow: rgb(150,150,150) 0px 0px;
+        font-style: normal;
+        border-collapse:separate;
+}
+.formatoFilaTabla_detalleCausasExternas{
+        border: 0px;
+        background:#e6e6e6;
+        border-left:0px ;
+        border-right:0px ;
+        border-top:0px ;
+        border-bottom:0px dotted #999999;
+        border-radius:0px;
+        box-shadow: rgb(150,150,150) 0px 0px;
+        font-style: normal;
+        border-collapse:separate;
+}
+.formatoFilaIntercalada1_CausaExterna{
+        font-size:10px;
+        background-color: #e6e6e6;
+        color:#423c7a;
+        vertical-Align:left;
+        border: 0px solid black;
+        border-bottom:1px dotted #999999;
+        border-radius:0px;
+}
+.formatoFilaIntercalada2_CausaExterna{
+        font-size:10px;
+        background-color:#e6e6e6;
+        color:#423c7a;
+        vertical-Align:center;
+        border: 0px;
+        border-bottom:1px dotted #999999;
+        border-radius:0px;
+}
+
+
+/************************************************************************************************/
+/*************************** CUADRO CON RECLAMOS POR CLIENTE Y SUCURSAL *************************/
+.formatoFilaIntercalada1_Reclamos{
+        /* Filas impares del reclamo */
+        background-color: #f1e9df;
+        color:#423c7a;
+        vertical-Align:middle;
+        text-align:left;
+}
+.formatoFilaIntercalada2_Reclamos{
+        /* Filas pares del reclamo */
+        background-color: #eef0f5;
+        color:#423c7a;
+        vertical-Align:middle;
+        text-align:left;
+}
+.formatoFilaIntercalada3_Reclamos{
+        /* Filas causas de cliente del reclamo */
+        background-color: #f7bc81;
+        color:#423c7a;
+        vertical-Align:middle;
+        text-align:left;
+}
+
