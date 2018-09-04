@@ -28,7 +28,7 @@ Rectangle {
 
     function cargarWeb(){
 
-            web_viewReclamoWeb.url="http://www.sistecoonline.com/madai/recXPerfilModificar.php?idReclamo="+txtCodigoReclamoSeleccionado.text.trim();
+            web_viewReclamoWeb.url="http://madai.sisteco.uy/madai/recXPerfilModificar.php?idReclamo="+txtCodigoReclamoSeleccionado.text.trim();
     }
 
 
@@ -219,7 +219,7 @@ Rectangle {
                 txtCodigoReclamoSeleccionado.color="#ffffff"
             }
             onClicked: {
-                modeloReclamos.abrirPaginaWeb("http://www.sistecoonline.com/madai/recXPerfilModificar.php?idReclamo="+txtCodigoReclamoSeleccionado.text.trim())
+                modeloReclamos.abrirPaginaWeb("http://madai.sisteco.uy/madai/recXPerfilModificar.php?idReclamo="+txtCodigoReclamoSeleccionado.text.trim())
             }
 
         }

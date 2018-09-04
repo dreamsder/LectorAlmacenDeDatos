@@ -12,7 +12,7 @@ public:
     Q_INVOKABLE QString retornaDirectorioReporteWeb() const;
     Q_INVOKABLE QString retornaDirectorioReporteWebSinLinks() const;
 
-    Q_INVOKABLE QString generarReporte(QString, bool, bool, bool, bool, bool, QString, bool ) const;
+    Q_INVOKABLE QString generarReporte(QString, bool, bool, bool, bool, bool, QString, bool , QString ) const;
 
     QString retornaDirectorioPDF() const;
     QString retornaDirectorioBanner() const;

@@ -96,7 +96,9 @@ Rectangle {
 
         _filtroConsultaRespaldo=_filtroWhereDeConsulta
 
-        var estadoGeneracionReporte=modeloReportes.generarReporte(_filtroWhereDeConsulta,cxbSoloCuadroReclamos.chekActivo,cxbExcluirCausasExternas.chekActivo,links,cxbOcultarReclamosSinCausaExterna.chekActivo,cxbCuadroAsistencias.chekActivo,_resultadoHorasSeleccionadas,cxbFusionarCausasExternas.chekActivo);
+
+
+        var estadoGeneracionReporte=modeloReportes.generarReporte(_filtroWhereDeConsulta,cxbSoloCuadroReclamos.chekActivo,cxbExcluirCausasExternas.chekActivo,links,cxbOcultarReclamosSinCausaExterna.chekActivo,cxbCuadroAsistencias.chekActivo,_resultadoHorasSeleccionadas,cxbFusionarCausasExternas.chekActivo,id_codigoPerfilesTiempoResolucion);
 
         if(estadoGeneracionReporte=="1"){
 

@@ -38,6 +38,8 @@ Rectangle {
     property int totalMinutosTareasTotal : 0
     property int totalMinutosResolucionTotal : 0
 
+    property string id_codigoPerfilesTiempoResolucion: "0"
+
     property int contadorReclamosIterados: -1
 
     ///cero son los orders que no son por comodin, uno es por comodin
@@ -55,7 +57,7 @@ Rectangle {
                                    +"sum(REC.tiempoResolucion)'tiempoResolucion', ";
 
 
-    property string _version: "1.15.1 - 25/10/2016"
+    property string _version: "1.16.0 - 04/09/2018"
     /// 0.44.0 - Se agrega el control de tolerancia de 10 minutos.
     /// 0.47.0 - Se agrego en la lista de botones, los registros que seleccionamos en el filtro anterior.
     /// 0.47.1 - Se corrige un error en el filtro de numero de reclamos.
@@ -112,6 +114,8 @@ Rectangle {
     /// 1.15.0 - 20/10/2016 - Cambio en texto de filtro de escalas en reporte.
     ///        - 20/10/2016 - Se crea pantalla para configurar los filtros del sistema.
     /// 1.15.1 - 25/10/2016 - Se corrige filtro de sucursales, que daba error al combinarlo con otros filtros.
+    /// 1.15.2 - 05/06/2018 - Se corrigen las url que apuntan a madai.
+    /// 1.16.0 - 04/09/2018 - Se agrega configuración para mostrar u ocultar información de reclamo coordinado, fecha fin del reclamo y nota al pie con información sobre espera respuesta del cliente(variable %tc%).
     property string orden:"ascendente"
 
     ListModel{
@@ -161,6 +165,8 @@ Rectangle {
             descripcionItem:"Hasta 8 horas"
             checkBoxActivo:false
         }
+
+
         ListElement{
             codigoItem:"9"
             descripcionItem:"Hasta 9 horas"

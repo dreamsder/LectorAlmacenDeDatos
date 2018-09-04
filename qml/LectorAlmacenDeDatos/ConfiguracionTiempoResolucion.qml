@@ -53,7 +53,9 @@ Rectangle {
             for(var i=0; i < modeloPerfilesTiempoResolucion.rowCount();i++){
 
                 modeloPerfilesTiempoResolucionVirtual.append({codigoPerfilesTiempoResolucion:modeloPerfilesTiempoResolucion.retornarCodigoPerfilesTiempoResolucion(i),
-                                                              nombrePerfilesTiempoResolucion:modeloPerfilesTiempoResolucion.retornarNombrePerfilesTiempoResolucion(i)
+                                                              nombrePerfilesTiempoResolucion:modeloPerfilesTiempoResolucion.retornarNombrePerfilesTiempoResolucion(i),
+                                                              textoTiempoClienteTerceros: modeloPerfilesTiempoResolucion.retornarTextoTiempoClienteTerceros(i),
+                                                              indice: i
                                                              })
 
             }

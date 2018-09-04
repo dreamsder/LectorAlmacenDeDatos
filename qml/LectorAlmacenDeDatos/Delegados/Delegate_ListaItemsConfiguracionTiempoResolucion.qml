@@ -4,14 +4,19 @@ import "../Controles"
 Rectangle {
     id: rectangle1
     width: 300
-    clip: true
     height: 100
+    //width: 800
+    //height: 570
+    clip: true
+
     color: "#2385a6"
     radius: 10
     border.color: "#ffa549"
     border.width: 0
 
     property string _codigoPerfilesTiempoResolucion: codigoPerfilesTiempoResolucion
+    property int _indice: indice
+
 
     property int _cantidadRegistrosFiltro: 0
 
@@ -34,6 +39,7 @@ Rectangle {
 
     }
 
+
     ParallelAnimation{
         id:expandirRectangulo
 
@@ -48,7 +54,7 @@ Rectangle {
             target: rectangle1
             property: "height"
             from:rectangle1.height
-            to:270
+            to:330
             duration: 300
         }
         PropertyAnimation{
@@ -65,6 +71,7 @@ Rectangle {
             text1.visible=false
             textEdit1.visible=true
             imgEliminar.visible=true
+            textEdit2.visible=true
         }
     }
 
@@ -116,7 +123,8 @@ Rectangle {
             flow1.visible=false
             text1.visible=true
             textEdit1.visible=false
-            imgEliminar.visible=false
+            imgEliminar.visible=false            
+            textEdit2.visible=false
         }
     }
 
@@ -130,66 +138,69 @@ Rectangle {
 
             if(btnEditarConfiguraciontiempoResolucion.textoBoton=="Editar"){
 
+                id_codigoPerfilesTiempoResolucion=codigoPerfilesTiempoResolucion
 
-                    modeloListaTipoDocumentosVirtual.setProperty(0,"checkBoxActivo",ckbHora1.chekActivo)
+                modeloListaTipoDocumentosVirtual.setProperty(0,"checkBoxActivo",ckbHora1.chekActivo)
 
-                    modeloListaTipoDocumentosVirtual.setProperty(1,"checkBoxActivo",ckbHora2.chekActivo)
+                modeloListaTipoDocumentosVirtual.setProperty(1,"checkBoxActivo",ckbHora2.chekActivo)
 
-                    modeloListaTipoDocumentosVirtual.setProperty(2,"checkBoxActivo",ckbHora3.chekActivo)
+                modeloListaTipoDocumentosVirtual.setProperty(2,"checkBoxActivo",ckbHora3.chekActivo)
 
-                    modeloListaTipoDocumentosVirtual.setProperty(3,"checkBoxActivo",ckbHora4.chekActivo)
+                modeloListaTipoDocumentosVirtual.setProperty(3,"checkBoxActivo",ckbHora4.chekActivo)
 
-                    modeloListaTipoDocumentosVirtual.setProperty(4,"checkBoxActivo",ckbHora5.chekActivo)
+                modeloListaTipoDocumentosVirtual.setProperty(4,"checkBoxActivo",ckbHora5.chekActivo)
 
-                    modeloListaTipoDocumentosVirtual.setProperty(5,"checkBoxActivo",ckbHora6.chekActivo)
+                modeloListaTipoDocumentosVirtual.setProperty(5,"checkBoxActivo",ckbHora6.chekActivo)
 
-                    modeloListaTipoDocumentosVirtual.setProperty(6,"checkBoxActivo",ckbHora7.chekActivo)
+                modeloListaTipoDocumentosVirtual.setProperty(6,"checkBoxActivo",ckbHora7.chekActivo)
 
-                    modeloListaTipoDocumentosVirtual.setProperty(7,"checkBoxActivo",ckbHora8.chekActivo)
+                modeloListaTipoDocumentosVirtual.setProperty(7,"checkBoxActivo",ckbHora8.chekActivo)
 
-                    modeloListaTipoDocumentosVirtual.setProperty(8,"checkBoxActivo",ckbHora9.chekActivo)
+                modeloListaTipoDocumentosVirtual.setProperty(8,"checkBoxActivo",ckbHora9.chekActivo)
 
-                    modeloListaTipoDocumentosVirtual.setProperty(9,"checkBoxActivo",ckbHora10.chekActivo)
+                modeloListaTipoDocumentosVirtual.setProperty(9,"checkBoxActivo",ckbHora10.chekActivo)
 
-                    modeloListaTipoDocumentosVirtual.setProperty(10,"checkBoxActivo",ckbHora11.chekActivo)
+                modeloListaTipoDocumentosVirtual.setProperty(10,"checkBoxActivo",ckbHora11.chekActivo)
 
-                    modeloListaTipoDocumentosVirtual.setProperty(11,"checkBoxActivo",ckbHora12.chekActivo)
+                modeloListaTipoDocumentosVirtual.setProperty(11,"checkBoxActivo",ckbHora12.chekActivo)
 
-                    modeloListaTipoDocumentosVirtual.setProperty(12,"checkBoxActivo",ckbHora13.chekActivo)
+                modeloListaTipoDocumentosVirtual.setProperty(12,"checkBoxActivo",ckbHora13.chekActivo)
 
-                    modeloListaTipoDocumentosVirtual.setProperty(13,"checkBoxActivo",ckbHora14.chekActivo)
+                modeloListaTipoDocumentosVirtual.setProperty(13,"checkBoxActivo",ckbHora14.chekActivo)
 
-                    modeloListaTipoDocumentosVirtual.setProperty(14,"checkBoxActivo",ckbHora15.chekActivo)
+                modeloListaTipoDocumentosVirtual.setProperty(14,"checkBoxActivo",ckbHora15.chekActivo)
 
-                    modeloListaTipoDocumentosVirtual.setProperty(15,"checkBoxActivo",ckbHora16.chekActivo)
+                modeloListaTipoDocumentosVirtual.setProperty(15,"checkBoxActivo",ckbHora16.chekActivo)
 
-                    modeloListaTipoDocumentosVirtual.setProperty(16,"checkBoxActivo",ckbHora17.chekActivo)
+                modeloListaTipoDocumentosVirtual.setProperty(16,"checkBoxActivo",ckbHora17.chekActivo)
 
-                    modeloListaTipoDocumentosVirtual.setProperty(17,"checkBoxActivo",ckbHora18.chekActivo)
+                modeloListaTipoDocumentosVirtual.setProperty(17,"checkBoxActivo",ckbHora18.chekActivo)
 
-                    modeloListaTipoDocumentosVirtual.setProperty(18,"checkBoxActivo",ckbHora19.chekActivo)
+                modeloListaTipoDocumentosVirtual.setProperty(18,"checkBoxActivo",ckbHora19.chekActivo)
 
-                    modeloListaTipoDocumentosVirtual.setProperty(19,"checkBoxActivo",ckbHora20.chekActivo)
+                modeloListaTipoDocumentosVirtual.setProperty(19,"checkBoxActivo",ckbHora20.chekActivo)
 
-                    modeloListaTipoDocumentosVirtual.setProperty(20,"checkBoxActivo",ckbHora21.chekActivo)
+                modeloListaTipoDocumentosVirtual.setProperty(20,"checkBoxActivo",ckbHora21.chekActivo)
 
-                    modeloListaTipoDocumentosVirtual.setProperty(21,"checkBoxActivo",ckbHora22.chekActivo)
+                modeloListaTipoDocumentosVirtual.setProperty(21,"checkBoxActivo",ckbHora22.chekActivo)
 
-                    modeloListaTipoDocumentosVirtual.setProperty(22,"checkBoxActivo",ckbHora23.chekActivo)
+                modeloListaTipoDocumentosVirtual.setProperty(22,"checkBoxActivo",ckbHora23.chekActivo)
 
-                    modeloListaTipoDocumentosVirtual.setProperty(23,"checkBoxActivo",ckbHora24.chekActivo)
+                modeloListaTipoDocumentosVirtual.setProperty(23,"checkBoxActivo",ckbHora24.chekActivo)
 
-                    modeloListaTipoDocumentosVirtual.setProperty(24,"checkBoxActivo",ckbHora25.chekActivo)
+                modeloListaTipoDocumentosVirtual.setProperty(24,"checkBoxActivo",ckbHora25.chekActivo)
 
-                    modeloListaTipoDocumentosVirtual.setProperty(25,"checkBoxActivo",ckbHora26.chekActivo)
+                modeloListaTipoDocumentosVirtual.setProperty(25,"checkBoxActivo",ckbHora26.chekActivo)
 
-                    modeloListaTipoDocumentosVirtual.setProperty(26,"checkBoxActivo",ckbHora27.chekActivo)
+                modeloListaTipoDocumentosVirtual.setProperty(26,"checkBoxActivo",ckbHora27.chekActivo)
 
-                    modeloListaTipoDocumentosVirtual.setProperty(27,"checkBoxActivo",ckbHora28.chekActivo)
+                modeloListaTipoDocumentosVirtual.setProperty(27,"checkBoxActivo",ckbHora28.chekActivo)
 
-                    modeloListaTipoDocumentosVirtual.setProperty(28,"checkBoxActivo",ckbHora29.chekActivo)
+                modeloListaTipoDocumentosVirtual.setProperty(28,"checkBoxActivo",ckbHora29.chekActivo)
 
-                    modeloListaTipoDocumentosVirtual.setProperty(29,"checkBoxActivo",ckbHora30.chekActivo)
+                modeloListaTipoDocumentosVirtual.setProperty(29,"checkBoxActivo",ckbHora30.chekActivo)
+
+
 
 
                 dobleClick()
@@ -199,17 +210,58 @@ Rectangle {
         }
 
         Flow {
-            id: flow1
-            visible: false
-            anchors.bottom: btnEditarConfiguraciontiempoResolucion.top
-            anchors.bottomMargin: 10
-            anchors.right: parent.right
+            id: flow2
+            anchors.right: imgEliminar.left
             anchors.rightMargin: 20
             anchors.left: parent.left
             anchors.leftMargin: 20
             anchors.top: textEdit1.bottom
             anchors.topMargin: 10
-            spacing: 10
+            visible: flow1.visible
+            spacing: flow1.spacing
+
+            CheckBox{
+                id: ckbMostrarCoordinado
+                colorTexto: "#ffffff"
+                textoValor: "Identificar coordinados"                
+            }CheckBox{
+                id: ckbMostrarHoraFinalizado
+                colorTexto: "#ffffff"
+                textoValor: "Mostrar Fecha/hora fin"
+            }CheckBox{
+                id: ckbMostrarTextoTiempoClienteTerceros
+                colorTexto: "#ffffff"
+                textoValor: "Mostrar nota al pie"
+
+
+                Component.onCompleted: {
+
+
+                    ckbMostrarCoordinado.chekActivo=modeloPerfilesTiempoResolucion.retornarMostrarCoordinado(_indice)
+                    ckbMostrarHoraFinalizado.chekActivo=modeloPerfilesTiempoResolucion.retornarMostrarHoraFinalizado(_indice)
+                    ckbMostrarTextoTiempoClienteTerceros.chekActivo=modeloPerfilesTiempoResolucion.retornarMostrarTextoTiempoClienteTerceros(_indice)
+
+                }
+
+            }
+
+        }
+
+
+
+
+        Flow {
+            id: flow1
+            visible: false
+            anchors.bottom: btnEditarConfiguraciontiempoResolucion.top
+            anchors.bottomMargin: 5
+            anchors.right: parent.right
+            anchors.rightMargin: 20
+            anchors.left: parent.left
+            anchors.leftMargin: 20
+            anchors.top: textEdit2.bottom
+            anchors.topMargin: 10
+            spacing: 7
 
             CheckBox{
                 id: ckbHora1
@@ -472,6 +524,7 @@ Rectangle {
                     var codigoNuevo="1"
 
                     modeloPerfilesTiempoResolucionVirtual.setProperty(index,"nombrePerfilesTiempoResolucion",textEdit1.text.trim())
+                    modeloPerfilesTiempoResolucionVirtual.setProperty(index,"textoTiempoClienteTerceros",textEdit2.text.trim())
 
                     if(codigoPerfilesTiempoResolucion=="999999999"){
 
@@ -482,7 +535,9 @@ Rectangle {
                         codigoNuevo=codigoPerfilesTiempoResolucion
                     }
 
-                    if(modeloPerfilesTiempoResolucion.guardarFiltro(codigoNuevo,nombrePerfilesTiempoResolucion)){
+                    if(modeloPerfilesTiempoResolucion.guardarFiltro(codigoNuevo,nombrePerfilesTiempoResolucion,textoTiempoClienteTerceros,
+                                                                    ckbMostrarCoordinado.chekActivo, ckbMostrarHoraFinalizado.chekActivo,
+                                                                    ckbMostrarTextoTiempoClienteTerceros.chekActivo)){
 
                         if(modeloPerfilesTiempoResolucionDetalle.eliminarFiltro(codigoNuevo)){
 
@@ -627,6 +682,54 @@ Rectangle {
 
                 }
             }
+        }
+
+        TextInput {
+            id: textEdit2
+            x: 0
+            y: 7
+            color: "#ffffff"
+            text: textoTiempoClienteTerceros
+            anchors.rightMargin: 0
+            anchors.right: parent.right
+            anchors.left: parent.left
+            anchors.leftMargin: 0
+            maximumLength: 400
+            font.family: "Arial"
+            horizontalAlignment: Text.AlignHCenter
+            font.bold: true
+            font.pixelSize: 12
+            Rectangle {
+                id: rectangle3
+                color: "#e15e5e"
+                radius: 10
+                anchors.rightMargin: 20
+                anchors.fill: parent
+                z: -1
+                anchors.leftMargin: 20
+            }
+            anchors.topMargin: 10
+            visible: false
+            anchors.top: flow2.bottom
+            clip: true
+        }
+
+        Text {
+            id: text2
+            color: "#ffffff"
+            text: textoTiempoClienteTerceros
+            anchors.top: flow2.bottom
+            anchors.topMargin: 10
+            anchors.right: parent.right
+            anchors.left: parent.left
+            font.bold: true
+            style: Text.Normal
+            clip: true
+            visible: false
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+            font.pixelSize: 20
+
         }
 
     }

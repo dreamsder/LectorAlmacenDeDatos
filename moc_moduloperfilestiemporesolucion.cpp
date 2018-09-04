@@ -22,7 +22,7 @@ static const uint qt_meta_data_ModuloPerfilesTiempoResolucion[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-      13,   14, // methods
+      17,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -39,10 +39,14 @@ static const uint qt_meta_data_ModuloPerfilesTiempoResolucion[] = {
      216,   31,   31,   31, 0x02,
      240,  233,  225,   31, 0x02,
      284,  233,  225,   31, 0x02,
-     395,  333,  328,   31, 0x02,
-     426,   31,  225,   31, 0x02,
-     446,  333,  328,   31, 0x02,
-     510,  479,  328,   31, 0x02,
+     328,  233,  225,   31, 0x02,
+     373,  233,  368,   31, 0x02,
+     404,  233,  368,   31, 0x02,
+     439,  233,  368,   31, 0x02,
+     649,  486,  368,   31, 0x02,
+     703,   31,  225,   31, 0x02,
+     785,  723,  368,   31, 0x02,
+     849,  818,  368,   31, 0x02,
 
        0        // eod
 };
@@ -58,9 +62,16 @@ static const char qt_meta_stringdata_ModuloPerfilesTiempoResolucion[] = {
     "QString\0indice\0"
     "retornarCodigoPerfilesTiempoResolucion(int)\0"
     "retornarNombrePerfilesTiempoResolucion(int)\0"
-    "bool\0codigoPerfilesTiempoResolucion,nombrePerfilesTiempoResolucion\0"
-    "guardarFiltro(QString,QString)\0"
+    "retornarTextoTiempoClienteTerceros(int)\0"
+    "bool\0retornarMostrarCoordinado(int)\0"
+    "retornarMostrarHoraFinalizado(int)\0"
+    "retornarMostrarTextoTiempoClienteTerceros(int)\0"
+    "codigoPerfilesTiempoResolucion,nombrePerfilesTiempoResolucion,textoTie"
+    "mpoClienteTerceros,mostrarCoordinado,mostrarHoraFinalizado,mostrarText"
+    "oTiempoClienteTerceros\0"
+    "guardarFiltro(QString,QString,QString,bool,bool,bool)\0"
     "nuevoCodigoFiltro()\0"
+    "codigoPerfilesTiempoResolucion,nombrePerfilesTiempoResolucion\0"
     "mensajePregunta(QString,QString)\0"
     "codigoPerfilesTiempoResolucion\0"
     "eliminarFiltro(QString)\0"
@@ -87,13 +98,21 @@ void ModuloPerfilesTiempoResolucion::qt_static_metacall(QObject *_o, QMetaObject
             if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = _r; }  break;
         case 8: { QString _r = _t->retornarNombrePerfilesTiempoResolucion((*reinterpret_cast< int(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = _r; }  break;
-        case 9: { bool _r = _t->guardarFiltro((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])));
-            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
-        case 10: { QString _r = _t->nuevoCodigoFiltro();
+        case 9: { QString _r = _t->retornarTextoTiempoClienteTerceros((*reinterpret_cast< int(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = _r; }  break;
-        case 11: { bool _r = _t->mensajePregunta((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])));
+        case 10: { bool _r = _t->retornarMostrarCoordinado((*reinterpret_cast< int(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
-        case 12: { bool _r = _t->eliminarFiltro((*reinterpret_cast< QString(*)>(_a[1])));
+        case 11: { bool _r = _t->retornarMostrarHoraFinalizado((*reinterpret_cast< int(*)>(_a[1])));
+            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
+        case 12: { bool _r = _t->retornarMostrarTextoTiempoClienteTerceros((*reinterpret_cast< int(*)>(_a[1])));
+            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
+        case 13: { bool _r = _t->guardarFiltro((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3])),(*reinterpret_cast< bool(*)>(_a[4])),(*reinterpret_cast< bool(*)>(_a[5])),(*reinterpret_cast< bool(*)>(_a[6])));
+            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
+        case 14: { QString _r = _t->nuevoCodigoFiltro();
+            if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = _r; }  break;
+        case 15: { bool _r = _t->mensajePregunta((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])));
+            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
+        case 16: { bool _r = _t->eliminarFiltro((*reinterpret_cast< QString(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
         default: ;
         }
@@ -132,9 +151,9 @@ int ModuloPerfilesTiempoResolucion::qt_metacall(QMetaObject::Call _c, int _id, v
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 13)
+        if (_id < 17)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 13;
+        _id -= 17;
     }
     return _id;
 }

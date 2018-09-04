@@ -70,7 +70,10 @@ QString ModuloReportes::retornaDirectorioPDF() const{
 
 QString ModuloReportes::generarReporte(QString _whereDinamico,bool _soloCuadroReclamos,bool _excluirCausasExternas,
                                        bool _sinLinks,bool _ocultarReclamosSinCausasExternas, bool _ocultarCuadroDeAsistencias,
-                                       QString _consultaSegunAsistenciaResolucion, bool _fusionarCuadroCausasExternas) const {
+                                       QString _consultaSegunAsistenciaResolucion, bool _fusionarCuadroCausasExternas,
+                                       QString _codigoPerfilesTiempoResolucion
+
+                                       ) const {
 
     int colorEstiloAlterno=0;
     double cantidadReclamosHardware=0;
@@ -140,11 +143,11 @@ QString ModuloReportes::generarReporte(QString _whereDinamico,bool _soloCuadroRe
         if(_ocultarReclamosSinCausasExternas){
             _consultaCodigoReclamosSeleccionadosClienteSucursal=" select REC.codigoReclamo,REC.nombreTecnicoResponsable,REC.direccionSucursal,REC.nombreDepartamento,"
                     "REC.fechaCompletaReclamo,REC.horaCompletaReclamo , REC.nombreTipo,REC.nombreMarca, REC.nombreModelo,REC.nombreSolicitante,REC.nombreFirmoCierre "
-                    " ,REC.numeroSerie,REC.causaAtribuida,REC.nombreCausa,REC.causaDeCliente,REC.tituloReclamo from Reclamos  REC where 1=1 and REC.causaAtribuida!='SISTECO' ";
+                    " ,REC.numeroSerie,REC.causaAtribuida,REC.nombreCausa,REC.causaDeCliente,REC.tituloReclamo,REC.codigoCoordinado,REC.fechaCompletaFinalizacion,REC.horaCompletaFinalizacion,REC.tiempoEsperaRespuestaCliente from Reclamos  REC where 1=1 and REC.causaAtribuida!='SISTECO' ";
         }else{
             _consultaCodigoReclamosSeleccionadosClienteSucursal=" select REC.codigoReclamo,REC.nombreTecnicoResponsable,REC.direccionSucursal,REC.nombreDepartamento,"
                     "REC.fechaCompletaReclamo,REC.horaCompletaReclamo , REC.nombreTipo,REC.nombreMarca, REC.nombreModelo,REC.nombreSolicitante,REC.nombreFirmoCierre "
-                    " ,REC.numeroSerie,REC.causaAtribuida,REC.nombreCausa,REC.causaDeCliente,REC.tituloReclamo from Reclamos  REC where 1=1 ";
+                    " ,REC.numeroSerie,REC.causaAtribuida,REC.nombreCausa,REC.causaDeCliente,REC.tituloReclamo,REC.codigoCoordinado,REC.fechaCompletaFinalizacion,REC.horaCompletaFinalizacion,REC.tiempoEsperaRespuestaCliente from Reclamos  REC where 1=1 ";
         }
 
 
@@ -178,7 +181,7 @@ QString ModuloReportes::generarReporte(QString _whereDinamico,bool _soloCuadroRe
         QString _groupByAsistenciasSegunTiempoResolucion= " group by 2 order by 3 asc ";
 
         QString _consultaAniosSeleccionadosDemo=_consultaAniosSeleccionados;
-        qDebug()<< _consultaAniosSeleccionadosDemo.append(_whereDinamico).append(_groupByAniosSeleccionados);
+      //  qDebug()<< _consultaAniosSeleccionadosDemo.append(_whereDinamico).append(_groupByAniosSeleccionados);
 
         QSqlQuery queryAnios = Database::consultaSql(_consultaAniosSeleccionados.append(_whereDinamico).append(_groupByAniosSeleccionados),"local");
         QSqlQuery queryClientes = Database::consultaSql(_consultaClientesSeleccionados.append(_whereDinamico).append(_groupByConsultaClientes),"local");
@@ -764,8 +767,8 @@ QString ModuloReportes::generarReporte(QString _whereDinamico,bool _soloCuadroRe
             }
 
 
-
-
+            QSqlQuery queryPerfilesTiempoResolucion= Database::consultaSql("select textoTiempoClienteTerceros,mostrarCoordinado,mostrarHoraFinalizado,mostrarTextoTiempoClienteTerceros from PerfilesTiempoResolucion where codigoPerfilesTiempoResolucion='"+_codigoPerfilesTiempoResolucion+"'","local");
+            queryPerfilesTiempoResolucion.first();
 
 
             /// Chequeo si tengo que generar solo el cuadro de reclamos. Si es true, genera solo el cuadro de reclamos, si es false, se
@@ -790,6 +793,9 @@ QString ModuloReportes::generarReporte(QString _whereDinamico,bool _soloCuadroRe
 
                         QString _variableConsultaCodigoReclamosSeleccionadosClienteSucursal=_consultaCodigoReclamosSeleccionadosClienteSucursal;
                         queryCodigoReclamoClienteSucursales=Database::consultaSql(_variableConsultaCodigoReclamosSeleccionadosClienteSucursal.append(_whereDinamico).append(" and REC.codigoCliente='"+queryClientesConCodigo.value(1).toString()+"' and REC.codigoSucursal='"+querySucursalesConCodigo.value(1).toString()+"' ").append(_groupByCodigoReclamo),"local");
+
+                     //   qDebug()<< queryCodigoReclamoClienteSucursales.lastQuery();
+
                         while(queryCodigoReclamoClienteSucursales.next()){
 
                             out << "\n<article>";
@@ -799,10 +805,38 @@ QString ModuloReportes::generarReporte(QString _whereDinamico,bool _soloCuadroRe
 
                             out << "\n<tr >";
 
+                            QString mensajeCoordinado="Reclamo Coordinado";
+                            QString fechaHoraFinalizado= "Finalizado: "+queryCodigoReclamoClienteSucursales.value(17).toString().trimmed()+" - "+queryCodigoReclamoClienteSucursales.value(18).toString().trimmed();
+
+                            QString classMenmsajeCoordinado="formatoFilaCoordinado";
+
+                            if(queryCodigoReclamoClienteSucursales.value(16).toString().trimmed()=="0"){
+                                    mensajeCoordinado="";
+                                    classMenmsajeCoordinado="formatoFilaIntercalada1_Reclamos";
+                            }
+
+                            //Chequeo si muestro la etiqueta de Reclamo coordinado
+                            if(queryPerfilesTiempoResolucion.value(1).toString()=="0"){
+                                mensajeCoordinado="";
+                                classMenmsajeCoordinado="formatoFilaIntercalada1_Reclamos";
+                            }
+
+                            //Chequeo si muestro la etiqueta de fecha hora finalizado
+                            if(queryPerfilesTiempoResolucion.value(2).toString()=="0"){
+                                fechaHoraFinalizado="";
+                            }
+
+
+
+
                             if(_sinLinks){
-                                out << "\n<td width=\"100%\" colspan=\"4\" class=\"formatoFilaIntercalada1_Reclamos\"text-align:left; >Asistencia técnica N°:     "+queryCodigoReclamoClienteSucursales.value(0).toString().trimmed()+"</td>";
+                                out << "\n<td colspan=\"1\" class=\"formatoFilaIntercalada1_Reclamos\"text-align:left; >Asistencia técnica N°:     "+queryCodigoReclamoClienteSucursales.value(0).toString().trimmed()+"</td>";
+                                out << "\n<td colspan=\"3\" class=\""+classMenmsajeCoordinado+"\"text-align:left;  >"+mensajeCoordinado+"</td>";
+
                             }else{
-                                out << "\n<td width=\"100%\" colspan=\"4\" class=\"formatoFilaIntercalada1_Reclamos\"text-align:left; >Asistencia técnica N°:     <a href=\"http://www.sistecoonline.com/madai/recXPerfilModificar.php?idReclamo="+queryCodigoReclamoClienteSucursales.value(0).toString().trimmed()+"\" >"+queryCodigoReclamoClienteSucursales.value(0).toString().trimmed()+"</a>    </td>";
+                                out << "\n<td colspan=\"1\" class=\"formatoFilaIntercalada1_Reclamos\"text-align:left; >Asistencia técnica N°:     <a href=\"http://madai.sisteco.uy/madai/recXPerfilModificar.php?idReclamo="+queryCodigoReclamoClienteSucursales.value(0).toString().trimmed()+"\" >"+queryCodigoReclamoClienteSucursales.value(0).toString().trimmed()+"</a>    </td>";
+                                out << "\n<td colspan=\"3\" class=\""+classMenmsajeCoordinado+"\"text-align:left;  >"+mensajeCoordinado+"</td>";
+
                             }
 
 
@@ -821,7 +855,9 @@ QString ModuloReportes::generarReporte(QString _whereDinamico,bool _soloCuadroRe
 
                             out << "\n<tr>";
                             out << "\n<td colspan=\"1\" class=\"formatoFilaIntercalada2_Reclamos\" text-align:left;>Fecha: "+queryCodigoReclamoClienteSucursales.value(4).toString().trimmed()+"</td>";
-                            out << "\n<td colspan=\"3\" class=\"formatoFilaIntercalada2_Reclamos\" text-align:left;>Hora llamado: "+queryCodigoReclamoClienteSucursales.value(5).toString().trimmed()+"</td>";
+                            out << "\n<td colspan=\"1\" class=\"formatoFilaIntercalada2_Reclamos\" text-align:left;>Hora llamado: "+queryCodigoReclamoClienteSucursales.value(5).toString().trimmed()+"</td>";
+                            out << "\n<td colspan=\"2\" class=\"formatoFilaIntercalada2_Reclamos\" text-align:left;>"+fechaHoraFinalizado+"</td>";
+
                             out << "\n</tr>";
 
 
@@ -906,10 +942,39 @@ QString ModuloReportes::generarReporte(QString _whereDinamico,bool _soloCuadroRe
                             }
 
 
+                            if(queryCodigoReclamoClienteSucursales.value(19).toString().trimmed()!="0" && queryPerfilesTiempoResolucion.value(3).toString()=="1"){
+
+                                QString  textoAmostrar=queryPerfilesTiempoResolucion.value(0).toString().trimmed();
+
+                                QString tiempoClienteHora=QString::number(queryCodigoReclamoClienteSucursales.value(19).toInt()/60);
+                                QString tiempoClienteMinutos=QString::number((queryCodigoReclamoClienteSucursales.value(19).toInt())%60);
+
+                                if(tiempoClienteHora.length()==1){
+                                    tiempoClienteHora="0"+tiempoClienteHora;
+                                }
+
+                                if(tiempoClienteMinutos.length()==1){
+                                    tiempoClienteMinutos="0"+tiempoClienteMinutos;
+                                }
+
+                                textoAmostrar.replace("%tc%",tiempoClienteHora+":"+tiempoClienteMinutos);
+
+                                out << "\n<tr>";
+                                out << "\n<td colspan=\"4\" class=\"formatoFilaIntercalada2_Reclamos\" text-align:left;>"+textoAmostrar+"</td>";
+                                out << "\n</tr>";
+
+
+
+
+                            }
+
+
 
                             out << "\n</tbody>";
                             out << "\n</table>";
                             out << "\n</article>";
+
+                            out << "\n<hr>";
                         }
                     }
                 }

@@ -17,15 +17,45 @@ ModuloPerfilesTiempoResolucion::ModuloPerfilesTiempoResolucion(QObject *parent)
     roles[codigoPerfilesTiempoResolucionRole] = "codigoPerfilesTiempoResolucion";
     roles[nombrePerfilesTiempoResolucionRole] = "nombrePerfilesTiempoResolucion";
 
+    roles[textoTiempoClienteTercerosRole] = "textoTiempoClienteTerceros";
+    roles[mostrarCoordinadoRole] = "mostrarCoordinado";
+    roles[mostrarHoraFinalizadoRole] = "mostrarHoraFinalizado";
+    roles[mostrarTextoTiempoClienteTercerosRole] = "mostrarTextoTiempoClienteTerceros";
+
     setRoleNames(roles);
+
+
+    /*
+
+      textoTiempoClienteTerceros
+      mostrarCoordinado
+      mostrarHoraFinalizado
+      mostrarTextoTiempoClienteTerceros
+
+    */
+
+
 }
 
 PerfilesTiempoResolucion::PerfilesTiempoResolucion(
         const QString &codigoPerfilesTiempoResolucion
-        ,const QString &nombrePerfilesTiempoResolucion
+        ,const QString &nombrePerfilesTiempoResolucion,
+
+        const QString &textoTiempoClienteTerceros,
+        const int &mostrarCoordinado,
+        const int &mostrarHoraFinalizado,
+        const int &mostrarTextoTiempoClienteTerceros
+
+
+
         )
     :m_codigoPerfilesTiempoResolucion(codigoPerfilesTiempoResolucion)
     ,m_nombrePerfilesTiempoResolucion(nombrePerfilesTiempoResolucion)
+
+    ,m_textoTiempoClienteTerceros(textoTiempoClienteTerceros)
+    ,m_mostrarCoordinado(mostrarCoordinado)
+    ,m_mostrarHoraFinalizado(mostrarHoraFinalizado)
+    ,m_mostrarTextoTiempoClienteTerceros(mostrarTextoTiempoClienteTerceros)
 {
 }
 
@@ -37,6 +67,24 @@ QString PerfilesTiempoResolucion::codigoPerfilesTiempoResolucion() const
 QString PerfilesTiempoResolucion::nombrePerfilesTiempoResolucion() const
 {
     return m_nombrePerfilesTiempoResolucion;
+}
+
+
+QString PerfilesTiempoResolucion::textoTiempoClienteTerceros() const
+{
+    return m_textoTiempoClienteTerceros;
+}
+int PerfilesTiempoResolucion::mostrarCoordinado() const
+{
+    return m_mostrarCoordinado;
+}
+int PerfilesTiempoResolucion::mostrarHoraFinalizado() const
+{
+    return m_mostrarHoraFinalizado;
+}
+int PerfilesTiempoResolucion::mostrarTextoTiempoClienteTerceros() const
+{
+    return m_mostrarTextoTiempoClienteTerceros;
 }
 
 
@@ -70,7 +118,12 @@ void ModuloPerfilesTiempoResolucion::buscar(){
             while (q.next()){
                 ModuloPerfilesTiempoResolucion::agregar(PerfilesTiempoResolucion(
                                                             q.value(rec.indexOf("codigoPerfilesTiempoResolucion")).toString(),
-                                                            q.value(rec.indexOf("nombrePerfilesTiempoResolucion")).toString()
+                                                            q.value(rec.indexOf("nombrePerfilesTiempoResolucion")).toString(),
+
+                                                            q.value(rec.indexOf("textoTiempoClienteTerceros")).toString(),
+                                                            q.value(rec.indexOf("mostrarCoordinado")).toInt(),
+                                                            q.value(rec.indexOf("mostrarHoraFinalizado")).toInt(),
+                                                            q.value(rec.indexOf("mostrarTextoTiempoClienteTerceros")).toInt()
                                                             ));
             }
         }
@@ -96,6 +149,20 @@ QVariant ModuloPerfilesTiempoResolucion::data(const QModelIndex & index, int rol
     else if (role == nombrePerfilesTiempoResolucionRole){
         return variable.nombrePerfilesTiempoResolucion();
     }
+
+
+    else if (role == textoTiempoClienteTercerosRole){
+        return variable.textoTiempoClienteTerceros();
+    }
+    else if (role == mostrarCoordinadoRole){
+        return variable.mostrarCoordinado();
+    }
+    else if (role == mostrarHoraFinalizadoRole){
+        return variable.mostrarHoraFinalizado();
+    }
+    else if (role == mostrarTextoTiempoClienteTercerosRole){
+        return variable.mostrarTextoTiempoClienteTerceros();
+    }
     return QVariant();
 }
 
@@ -107,7 +174,53 @@ QString ModuloPerfilesTiempoResolucion::retornarNombrePerfilesTiempoResolucion(i
 }
 
 
-bool ModuloPerfilesTiempoResolucion::guardarFiltro(QString codigoPerfilesTiempoResolucion,QString nombrePerfilesTiempoResolucion) const {
+QString ModuloPerfilesTiempoResolucion::retornarTextoTiempoClienteTerceros(int indice) const{
+
+    return m_PerfilesTiempoResolucion[indice].textoTiempoClienteTerceros();
+}
+bool ModuloPerfilesTiempoResolucion::retornarMostrarCoordinado(int indice) const{
+    if(m_PerfilesTiempoResolucion[indice].mostrarCoordinado()==1){
+        return true;
+    }else{
+        return false;
+    }
+}
+bool ModuloPerfilesTiempoResolucion::retornarMostrarHoraFinalizado(int indice) const{
+    if(m_PerfilesTiempoResolucion[indice].mostrarHoraFinalizado()==1){
+        return true;
+    }else{
+        return false;
+    }
+}
+bool ModuloPerfilesTiempoResolucion::retornarMostrarTextoTiempoClienteTerceros(int indice) const{
+
+    if(m_PerfilesTiempoResolucion[indice].mostrarTextoTiempoClienteTerceros()==1){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+bool ModuloPerfilesTiempoResolucion::guardarFiltro(QString codigoPerfilesTiempoResolucion,QString nombrePerfilesTiempoResolucion, QString textoTiempoClienteTerceros,
+                                                   bool mostrarCoordinado, bool mostrarHoraFinalizado, bool mostrarTextoTiempoClienteTerceros) const {
+
+
+
+
+
+    QString mostrarCoordinadoINT ="0";
+    QString mostrarHoraFinalizadoINT="0";
+    QString mostrarTextoTiempoClienteTercerosINT="0";
+
+    if(mostrarCoordinado)
+        mostrarCoordinadoINT="1";
+
+    if(mostrarHoraFinalizado)
+        mostrarHoraFinalizadoINT="1";
+
+    if(mostrarTextoTiempoClienteTerceros)
+        mostrarTextoTiempoClienteTercerosINT="1";
+
 
     bool conexion=true;
     Database::cehqueStatusAccesoMysql("local");
@@ -124,7 +237,7 @@ bool ModuloPerfilesTiempoResolucion::guardarFiltro(QString codigoPerfilesTiempoR
         if(query.exec("select * from PerfilesTiempoResolucion where codigoPerfilesTiempoResolucion='"+codigoPerfilesTiempoResolucion+"';")) {
 
             if(query.first()){
-                if(query.exec("UPDATE PerfilesTiempoResolucion SET nombrePerfilesTiempoResolucion='"+nombrePerfilesTiempoResolucion+"' where codigoPerfilesTiempoResolucion='"+codigoPerfilesTiempoResolucion+"';")) {
+                if(query.exec("UPDATE PerfilesTiempoResolucion SET nombrePerfilesTiempoResolucion='"+nombrePerfilesTiempoResolucion+"',textoTiempoClienteTerceros='"+textoTiempoClienteTerceros+"',mostrarCoordinado='"+mostrarCoordinadoINT+"',mostrarHoraFinalizado='"+mostrarHoraFinalizadoINT+"',mostrarTextoTiempoClienteTerceros='"+mostrarTextoTiempoClienteTercerosINT+"'    where codigoPerfilesTiempoResolucion='"+codigoPerfilesTiempoResolucion+"';")) {
                     return true;
                 }else{
                     qDebug()<< query.lastError();
@@ -132,7 +245,7 @@ bool ModuloPerfilesTiempoResolucion::guardarFiltro(QString codigoPerfilesTiempoR
                     return false;
                 }
             }else{
-                if(query.exec("REPLACE INTO PerfilesTiempoResolucion (codigoPerfilesTiempoResolucion,nombrePerfilesTiempoResolucion) VALUES('"+codigoPerfilesTiempoResolucion+"','"+nombrePerfilesTiempoResolucion+"');")) {
+                if(query.exec("REPLACE INTO PerfilesTiempoResolucion (codigoPerfilesTiempoResolucion,nombrePerfilesTiempoResolucion,textoTiempoClienteTerceros,mostrarCoordinado,mostrarHoraFinalizado,mostrarTextoTiempoClienteTerceros) VALUES('"+codigoPerfilesTiempoResolucion+"','"+nombrePerfilesTiempoResolucion+"','"+textoTiempoClienteTerceros+"','"+mostrarCoordinadoINT+"','"+mostrarHoraFinalizadoINT+"','"+mostrarTextoTiempoClienteTercerosINT+"');")) {
                     return true;
                 }else{
                     qDebug()<< query.lastError();
