@@ -21,18 +21,10 @@ ModuloPerfilesTiempoResolucion::ModuloPerfilesTiempoResolucion(QObject *parent)
     roles[mostrarCoordinadoRole] = "mostrarCoordinado";
     roles[mostrarHoraFinalizadoRole] = "mostrarHoraFinalizado";
     roles[mostrarTextoTiempoClienteTercerosRole] = "mostrarTextoTiempoClienteTerceros";
+    roles[mostrarTiempoPromedioAsistenciasRole] = "mostrarTiempoPromedioAsistencias";
+
 
     setRoleNames(roles);
-
-
-    /*
-
-      textoTiempoClienteTerceros
-      mostrarCoordinado
-      mostrarHoraFinalizado
-      mostrarTextoTiempoClienteTerceros
-
-    */
 
 
 }
@@ -44,7 +36,9 @@ PerfilesTiempoResolucion::PerfilesTiempoResolucion(
         const QString &textoTiempoClienteTerceros,
         const int &mostrarCoordinado,
         const int &mostrarHoraFinalizado,
-        const int &mostrarTextoTiempoClienteTerceros
+        const int &mostrarTextoTiempoClienteTerceros,
+        const int &mostrarTiempoPromedioAsistencias
+
 
 
 
@@ -56,6 +50,9 @@ PerfilesTiempoResolucion::PerfilesTiempoResolucion(
     ,m_mostrarCoordinado(mostrarCoordinado)
     ,m_mostrarHoraFinalizado(mostrarHoraFinalizado)
     ,m_mostrarTextoTiempoClienteTerceros(mostrarTextoTiempoClienteTerceros)
+    ,m_mostrarTiempoPromedioAsistencias(mostrarTiempoPromedioAsistencias)
+
+
 {
 }
 
@@ -86,6 +83,13 @@ int PerfilesTiempoResolucion::mostrarTextoTiempoClienteTerceros() const
 {
     return m_mostrarTextoTiempoClienteTerceros;
 }
+
+int PerfilesTiempoResolucion::mostrarTiempoPromedioAsistencias() const
+{
+    return m_mostrarTiempoPromedioAsistencias;
+}
+
+
 
 
 void ModuloPerfilesTiempoResolucion::agregar(const PerfilesTiempoResolucion &perfilesTiempoResolucion)
@@ -123,7 +127,11 @@ void ModuloPerfilesTiempoResolucion::buscar(){
                                                             q.value(rec.indexOf("textoTiempoClienteTerceros")).toString(),
                                                             q.value(rec.indexOf("mostrarCoordinado")).toInt(),
                                                             q.value(rec.indexOf("mostrarHoraFinalizado")).toInt(),
-                                                            q.value(rec.indexOf("mostrarTextoTiempoClienteTerceros")).toInt()
+                                                            q.value(rec.indexOf("mostrarTextoTiempoClienteTerceros")).toInt(),
+                                                            q.value(rec.indexOf("mostrarTiempoPromedioAsistencias")).toInt()
+
+
+
                                                             ));
             }
         }
@@ -163,6 +171,12 @@ QVariant ModuloPerfilesTiempoResolucion::data(const QModelIndex & index, int rol
     else if (role == mostrarTextoTiempoClienteTercerosRole){
         return variable.mostrarTextoTiempoClienteTerceros();
     }
+    else if (role == mostrarTiempoPromedioAsistenciasRole){
+        return variable.mostrarTiempoPromedioAsistencias();
+    }
+
+
+
     return QVariant();
 }
 
@@ -200,9 +214,19 @@ bool ModuloPerfilesTiempoResolucion::retornarMostrarTextoTiempoClienteTerceros(i
         return false;
     }
 }
+bool ModuloPerfilesTiempoResolucion::retornarMostrarTiempoPromedioAsistencias(int indice) const{
+
+    if(m_PerfilesTiempoResolucion[indice].mostrarTiempoPromedioAsistencias()==1){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+
 
 bool ModuloPerfilesTiempoResolucion::guardarFiltro(QString codigoPerfilesTiempoResolucion,QString nombrePerfilesTiempoResolucion, QString textoTiempoClienteTerceros,
-                                                   bool mostrarCoordinado, bool mostrarHoraFinalizado, bool mostrarTextoTiempoClienteTerceros) const {
+                                                   bool mostrarCoordinado, bool mostrarHoraFinalizado, bool mostrarTextoTiempoClienteTerceros, bool mostrarTiempoPromedioAsistencias) const {
 
 
 
@@ -211,6 +235,9 @@ bool ModuloPerfilesTiempoResolucion::guardarFiltro(QString codigoPerfilesTiempoR
     QString mostrarCoordinadoINT ="0";
     QString mostrarHoraFinalizadoINT="0";
     QString mostrarTextoTiempoClienteTercerosINT="0";
+    QString mostrarTiempoPromedioAsistenciasINT="0";
+
+
 
     if(mostrarCoordinado)
         mostrarCoordinadoINT="1";
@@ -220,6 +247,11 @@ bool ModuloPerfilesTiempoResolucion::guardarFiltro(QString codigoPerfilesTiempoR
 
     if(mostrarTextoTiempoClienteTerceros)
         mostrarTextoTiempoClienteTercerosINT="1";
+
+    if(mostrarTiempoPromedioAsistencias)
+        mostrarTiempoPromedioAsistenciasINT="1";
+
+
 
 
     bool conexion=true;
@@ -237,7 +269,7 @@ bool ModuloPerfilesTiempoResolucion::guardarFiltro(QString codigoPerfilesTiempoR
         if(query.exec("select * from PerfilesTiempoResolucion where codigoPerfilesTiempoResolucion='"+codigoPerfilesTiempoResolucion+"';")) {
 
             if(query.first()){
-                if(query.exec("UPDATE PerfilesTiempoResolucion SET nombrePerfilesTiempoResolucion='"+nombrePerfilesTiempoResolucion+"',textoTiempoClienteTerceros='"+textoTiempoClienteTerceros+"',mostrarCoordinado='"+mostrarCoordinadoINT+"',mostrarHoraFinalizado='"+mostrarHoraFinalizadoINT+"',mostrarTextoTiempoClienteTerceros='"+mostrarTextoTiempoClienteTercerosINT+"'    where codigoPerfilesTiempoResolucion='"+codigoPerfilesTiempoResolucion+"';")) {
+                if(query.exec("UPDATE PerfilesTiempoResolucion SET nombrePerfilesTiempoResolucion='"+nombrePerfilesTiempoResolucion+"',textoTiempoClienteTerceros='"+textoTiempoClienteTerceros+"',mostrarCoordinado='"+mostrarCoordinadoINT+"',mostrarHoraFinalizado='"+mostrarHoraFinalizadoINT+"',mostrarTextoTiempoClienteTerceros='"+mostrarTextoTiempoClienteTercerosINT+"',mostrarTiempoPromedioAsistencias='"+mostrarTiempoPromedioAsistenciasINT+"'    where codigoPerfilesTiempoResolucion='"+codigoPerfilesTiempoResolucion+"';")) {
                     return true;
                 }else{
                     qDebug()<< query.lastError();
@@ -245,7 +277,7 @@ bool ModuloPerfilesTiempoResolucion::guardarFiltro(QString codigoPerfilesTiempoR
                     return false;
                 }
             }else{
-                if(query.exec("REPLACE INTO PerfilesTiempoResolucion (codigoPerfilesTiempoResolucion,nombrePerfilesTiempoResolucion,textoTiempoClienteTerceros,mostrarCoordinado,mostrarHoraFinalizado,mostrarTextoTiempoClienteTerceros) VALUES('"+codigoPerfilesTiempoResolucion+"','"+nombrePerfilesTiempoResolucion+"','"+textoTiempoClienteTerceros+"','"+mostrarCoordinadoINT+"','"+mostrarHoraFinalizadoINT+"','"+mostrarTextoTiempoClienteTercerosINT+"');")) {
+                if(query.exec("REPLACE INTO PerfilesTiempoResolucion (codigoPerfilesTiempoResolucion,nombrePerfilesTiempoResolucion,textoTiempoClienteTerceros,mostrarCoordinado,mostrarHoraFinalizado,mostrarTextoTiempoClienteTerceros,mostrarTiempoPromedioAsistencias) VALUES('"+codigoPerfilesTiempoResolucion+"','"+nombrePerfilesTiempoResolucion+"','"+textoTiempoClienteTerceros+"','"+mostrarCoordinadoINT+"','"+mostrarHoraFinalizadoINT+"','"+mostrarTextoTiempoClienteTercerosINT+"','"+mostrarTiempoPromedioAsistenciasINT+"');")) {
                     return true;
                 }else{
                     qDebug()<< query.lastError();

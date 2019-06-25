@@ -14,6 +14,9 @@
 #include <QDesktopServices>
 #include <QUrl>
 
+QString _tiempoReporte="";
+
+
 ModuloReportes::ModuloReportes(QObject *parent) :
     QObject(parent)
 {}
@@ -161,7 +164,7 @@ QString ModuloReportes::generarReporte(QString _whereDinamico,bool _soloCuadroRe
         QString _consultaAniosSeleccionados=" select REC.codigoAnio as 'Anio'  from Reclamos  REC where 1=1 ";
         QString _consultaDetalleDeCausasExternasTotales="select REC.codigoCausa, sum(1),REC.nombreCausa  from Reclamos REC where REC.causaAtribuida!='SISTECO' ";
         QString _consultaDetalleDeCausasClienteYSucursales="select REC.codigoCausa, sum(1), REC.codigoCliente,REC.razonCliente,REC.codigoSucursal,REC.nombreSucursal  from Reclamos REC where REC.causaAtribuida!='SISTECO' ";
-        QString _consultaAsistenciasSegunTiempoResolucion= _consultaSegunAsistenciaResolucion; //"SELECT sum(1), case when tiempoResolucion<=239 then 'Menos de 4 hrs' WHEN tiempoResolucion>239 and tiempoResolucion<=479 THEN 'Entre 4 y 8 hrs'    else 'La incidencia reportada necesitó análisis de desarrollo'  end ,tiempoResolucion  FROM Reclamos REC  where 1=1 ";
+        QString _consultaAsistenciasSegunTiempoResolucion= _consultaSegunAsistenciaResolucion; //"SELECT sum(1), case when tiempoResolucion<=239 then 'Menos de 4 hrs' WHEN tiempoResolucion>239 and tiempoResolucion<=479 THEN 'Entre 4 y 8 hrs'    else 'La incidencia reportada necesitó análisis de desarrollo'  end ,tiempoResolucion, sum(tiempoResolucion)  FROM Reclamos REC  where 1=1 ";
 
         /// Causas externas de software y hardware
         QString _consultaCausasExternasFusionadas="select REC.nombreCausa, sum(1),sum(1) from Reclamos REC where REC.causaAtribuida!='SISTECO'  ";
@@ -367,6 +370,12 @@ QString ModuloReportes::generarReporte(QString _whereDinamico,bool _soloCuadroRe
             }
 
 
+
+            /// Levanto los datos del perfil asociado
+            QSqlQuery queryPerfilesTiempoResolucion= Database::consultaSql("select textoTiempoClienteTerceros,mostrarCoordinado,mostrarHoraFinalizado,mostrarTextoTiempoClienteTerceros,mostrarTiempoPromedioAsistencias from PerfilesTiempoResolucion where codigoPerfilesTiempoResolucion='"+_codigoPerfilesTiempoResolucion+"'","local");
+            queryPerfilesTiempoResolucion.first();
+
+
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             /// Chequeo si tengo que excluir el cuadro de asistencias por hora segun tiempo de resolucion. Si es true, el cuadro no aparece, si es false, el cuadro aparece.
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -376,6 +385,8 @@ QString ModuloReportes::generarReporte(QString _whereDinamico,bool _soloCuadroRe
                 //  bool _tieneAsistenciasConTiempoMayorAochoHoras=false;
                 QSqlQuery queryCuadroAsistenciasPorTiempoResuelto = Database::consultaSql(_consultaAsistenciasSegunTiempoResolucion.append(_whereDinamico).append(_groupByAsistenciasSegunTiempoResolucion),"local");
 
+
+
                 if(queryCuadroAsistenciasPorTiempoResuelto.first()){
                     if(queryCuadroAsistenciasPorTiempoResuelto.value(0).toString()!=""){
 
@@ -384,15 +395,37 @@ QString ModuloReportes::generarReporte(QString _whereDinamico,bool _soloCuadroRe
                         out << "\n<table  width=\"100%\">";
                         out << "\n<thead>";
                         out << "\n<tr>";
-                        out << "\n<th width=\"55%\" class=\"cabeceraCuadroTiempos\">TIEMPO DE RESOLUCION</th>";
+                        out << "\n<th width=\"35%\" class=\"cabeceraCuadroTiempos\">TIEMPO DE RESOLUCION</th>";
                         out << "\n<th width=\"20%\" class=\"cabeceraCuadroTiempos\">CANTIDAD DE ASISTENCIAS</th>";
                         out << "\n<th width=\"25%\" class=\"cabeceraCuadroTiempos\">% SOBRE TOTAL</th>";
+
+                        //Chequeo si muestro el tiempo promedio por asistencia
+                        if(queryPerfilesTiempoResolucion.value(4).toString()=="1"){
+                            out << "\n<th width=\"20%\" class=\"cabeceraCuadroTiempos\">TIEMPO PROMEDIO ASISTENCIA</th>";
+                        }
+
+
                         out << "\n</tr>";
                         out << "\n</thead>";
                         out << "\n<tbody>";
 
                         ///Imprimo el contenido de la tabla
                         queryCuadroAsistenciasPorTiempoResuelto.previous();
+
+                     /*   ///Obtengo el total de tiempo de las asistencias de éste cuadro
+                        long totalTiempoAsistencias=0;
+                        while(queryCuadroAsistenciasPorTiempoResuelto.next()){
+                             totalTiempoAsistencias+=queryCuadroAsistenciasPorTiempoResuelto.value(3).toLongLong();
+                        }*/
+
+
+
+
+
+                        queryCuadroAsistenciasPorTiempoResuelto.first();
+                        queryCuadroAsistenciasPorTiempoResuelto.previous();
+
+
                         while(queryCuadroAsistenciasPorTiempoResuelto.next()){
                             out << "\n<tr>";
 
@@ -410,9 +443,21 @@ QString ModuloReportes::generarReporte(QString _whereDinamico,bool _soloCuadroRe
                                         if(colorEstiloAlterno==0){
                                             out << "\n<th class=\"formatoFilaIntercalada1_CuadroTiempos\" align=\"center\" >"+queryCuadroAsistenciasPorTiempoResuelto.value(0).toString()+"</th>";
                                             out << "\n<th class=\"formatoFilaIntercalada1_CuadroTiempos\" >"+QString::number((100/(cantidadReclamosHardware+cantidadReclamosSoftware))*queryCuadroAsistenciasPorTiempoResuelto.value(0).toDouble(),'f',2)+" % </th>";
+
+                                            //Chequeo si muestro el tiempo promedio por asistencia
+                                            if(queryPerfilesTiempoResolucion.value(4).toString()=="1"){
+                                                out << "\n<th class=\"formatoFilaIntercalada1_CuadroTiempos\" >"+retornarTiempoTotalEnHoras(queryCuadroAsistenciasPorTiempoResuelto.value(4).toDouble())+" hs.</th>";
+                                            }
+
+
                                         }else if(colorEstiloAlterno==1){
                                             out << "\n<th class=\"formatoFilaIntercalada2_CuadroTiempos\" align=\"center\" >"+queryCuadroAsistenciasPorTiempoResuelto.value(0).toString()+"</th>";
                                             out << "\n<th class=\"formatoFilaIntercalada2_CuadroTiempos\" >"+QString::number((100/(cantidadReclamosHardware+cantidadReclamosSoftware))*queryCuadroAsistenciasPorTiempoResuelto.value(0).toDouble(),'f',2)+" % </th>";
+
+                                            //Chequeo si muestro el tiempo promedio por asistencia
+                                            if(queryPerfilesTiempoResolucion.value(4).toString()=="1"){
+                                                out << "\n<th class=\"formatoFilaIntercalada2_CuadroTiempos\" >"+retornarTiempoTotalEnHoras(queryCuadroAsistenciasPorTiempoResuelto.value(4).toDouble())+" hs.</th>";
+                                            }
                                         }
                                     }
                                 }
@@ -767,8 +812,6 @@ QString ModuloReportes::generarReporte(QString _whereDinamico,bool _soloCuadroRe
             }
 
 
-            QSqlQuery queryPerfilesTiempoResolucion= Database::consultaSql("select textoTiempoClienteTerceros,mostrarCoordinado,mostrarHoraFinalizado,mostrarTextoTiempoClienteTerceros from PerfilesTiempoResolucion where codigoPerfilesTiempoResolucion='"+_codigoPerfilesTiempoResolucion+"'","local");
-            queryPerfilesTiempoResolucion.first();
 
 
             /// Chequeo si tengo que generar solo el cuadro de reclamos. Si es true, genera solo el cuadro de reclamos, si es false, se
@@ -1048,6 +1091,7 @@ void ModuloReportes::abrirNavegadorArchivos()const{
 
 QString ModuloReportes::retornaNombreReportePDF(QString _whereDinamico) const {
 
+
     QString _nombreReportePDF="";
     Database::cehqueStatusAccesoMysql("local");
     bool conexion=true;
@@ -1063,8 +1107,9 @@ QString ModuloReportes::retornaNombreReportePDF(QString _whereDinamico) const {
         QString _consultaClientesSeleccionados=" select REC.razonCliente as 'Cliente'  from Reclamos  REC where 1=1 ";
         QString _groupByConsultaClientes=" group by REC.codigoCliente order by REC.razonCliente ";
 
-        QString _consultaAniosSeleccionados=" select REC.codigoAnio as 'Anio'  from Reclamos  REC where 1=1 ";
-        QString _groupByAniosSeleccionados=" group by REC.codigoAnio order by REC.codigoAnio ";
+        QString _consultaAniosSeleccionados=" select sub.Anio'Anio' from (select REC.codigoAnio as 'Anio'  from Reclamos  REC where 1=1 ";
+        QString _groupByAniosSeleccionados="  order by REC.codigoAnio) sub group by sub.Anio ";
+        //QString _groupByAniosSeleccionados=" group by REC.codigoAnio order by REC.codigoAnio) ";
 
         QString _consultaMesesSeleccionados=" select REC.nombreMes as 'Mes'  from Reclamos  REC where 1=1 ";
         QString _groupByMesesSeleccionados=" group by REC.codigoMes order by REC.codigoMes ";
@@ -1088,6 +1133,8 @@ QString ModuloReportes::retornaNombreReportePDF(QString _whereDinamico) const {
         while(queryMeses.next()){
             _nombreReportePDF+=queryMeses.value(0).toString()+"-";
         }
+
+
         ///Años a mostrar
         _nombreReportePDF+=queryAnios.value(0).toString();
 
@@ -1095,3 +1142,20 @@ QString ModuloReportes::retornaNombreReportePDF(QString _whereDinamico) const {
 
     }else{return "reporte-BD_ERROR.pdf";}
 }
+
+
+QString ModuloReportes::retornarTiempoTotalEnHoras(double _tiempoTotal) const{
+
+    _tiempoReporte = QString::number(((int)_tiempoTotal/60),'f',0)+":"+QString::number(((int)_tiempoTotal%60),'f',0);
+
+    QStringList list;
+    list= _tiempoReporte.split(":");
+    if(list.at(0).length()==1){
+        _tiempoReporte=_tiempoReporte.insert(0,"0");
+    }
+    if(list.at(1).length()==1){
+        _tiempoReporte=_tiempoReporte.insert(_tiempoReporte.indexOf(":")+1,"0");
+    }
+    return _tiempoReporte;
+}
+

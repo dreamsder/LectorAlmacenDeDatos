@@ -235,14 +235,17 @@ Rectangle {
 
 
                 Component.onCompleted: {
-
-
                     ckbMostrarCoordinado.chekActivo=modeloPerfilesTiempoResolucion.retornarMostrarCoordinado(_indice)
                     ckbMostrarHoraFinalizado.chekActivo=modeloPerfilesTiempoResolucion.retornarMostrarHoraFinalizado(_indice)
                     ckbMostrarTextoTiempoClienteTerceros.chekActivo=modeloPerfilesTiempoResolucion.retornarMostrarTextoTiempoClienteTerceros(_indice)
+                    ckbMostrarTiempoPromedioAsistencias.chekActivo=modeloPerfilesTiempoResolucion.retornarMostrarTiempoPromedioAsistencias(_indice)
 
                 }
 
+            }CheckBox{
+                id: ckbMostrarTiempoPromedioAsistencias
+                colorTexto: "#ffffff"
+                textoValor: "Mostrar Tiempo promedio"
             }
 
         }
@@ -537,7 +540,7 @@ Rectangle {
 
                     if(modeloPerfilesTiempoResolucion.guardarFiltro(codigoNuevo,nombrePerfilesTiempoResolucion,textoTiempoClienteTerceros,
                                                                     ckbMostrarCoordinado.chekActivo, ckbMostrarHoraFinalizado.chekActivo,
-                                                                    ckbMostrarTextoTiempoClienteTerceros.chekActivo)){
+                                                                    ckbMostrarTextoTiempoClienteTerceros.chekActivo,ckbMostrarTiempoPromedioAsistencias.chekActivo)){
 
                         if(modeloPerfilesTiempoResolucionDetalle.eliminarFiltro(codigoNuevo)){
 

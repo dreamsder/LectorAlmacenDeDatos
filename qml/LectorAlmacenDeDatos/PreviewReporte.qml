@@ -84,7 +84,7 @@ Rectangle {
             //_resultadoHorasSeleccionadas+="  when tiempoResolucion>="+_minutoInicial+" then 'La incidencia reportada necesitó análisis de desarrollo' ";
             _resultadoHorasSeleccionadas+="  when tiempoResolucion>="+_minutoInicial+" then 'Investigación de la causa raíz de la incidencia reportada' ";
 
-            _resultadoHorasSeleccionadas+=" else 'Otro' end ,tiempoResolucion  FROM Reclamos REC  where 1=1 "
+            _resultadoHorasSeleccionadas+=" else 'Otro' end ,tiempoResolucion, sum(tiempoResolucion), sum(tiempoResolucion)/sum(1)   FROM Reclamos REC  where 1=1 "
 
             //console.log(_resultadoHorasSeleccionadas)
 

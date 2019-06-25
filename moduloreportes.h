@@ -26,6 +26,7 @@ public:
     Q_INVOKABLE QString retornaNombreReportePDF(QString ) const;
 
 
+    QString retornarTiempoTotalEnHoras(double _tiempoTotal) const;
 
     Q_INVOKABLE void abrirNavegadorArchivos()const;
 

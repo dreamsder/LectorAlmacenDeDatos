@@ -13,7 +13,8 @@ public:
 
                                         const int &mostrarCoordinado,
                                         const int &mostrarHoraFinalizado,
-                                        const int &mostrarTextoTiempoClienteTerceros
+                                        const int &mostrarTextoTiempoClienteTerceros,
+                                        const int &mostrarTiempoPromedioAsistencias
 
                                         );
 
@@ -25,6 +26,8 @@ public:
     int mostrarCoordinado() const;
     int mostrarHoraFinalizado() const;
     int mostrarTextoTiempoClienteTerceros() const;
+    int mostrarTiempoPromedioAsistencias() const;
+
 
 
 private:
@@ -35,6 +38,8 @@ private:
     int m_mostrarCoordinado ;
     int m_mostrarHoraFinalizado ;
     int m_mostrarTextoTiempoClienteTerceros ;
+    int m_mostrarTiempoPromedioAsistencias ;
+
 
 
 };
@@ -49,7 +54,8 @@ public:
         textoTiempoClienteTercerosRole,
         mostrarCoordinadoRole,
         mostrarHoraFinalizadoRole,
-        mostrarTextoTiempoClienteTercerosRole
+        mostrarTextoTiempoClienteTercerosRole,
+        mostrarTiempoPromedioAsistenciasRole
 
     };
 
@@ -77,11 +83,15 @@ public:
     Q_INVOKABLE bool retornarMostrarCoordinado(int indice) const;
     Q_INVOKABLE bool retornarMostrarHoraFinalizado(int indice) const;
     Q_INVOKABLE bool retornarMostrarTextoTiempoClienteTerceros(int indice) const;
+    Q_INVOKABLE bool retornarMostrarTiempoPromedioAsistencias(int indice) const;
+
 
 
 
     Q_INVOKABLE bool guardarFiltro(QString codigoPerfilesTiempoResolucion, QString nombrePerfilesTiempoResolucion, QString textoTiempoClienteTerceros,
-                                   bool mostrarCoordinado, bool mostrarHoraFinalizado, bool mostrarTextoTiempoClienteTerceros) const;
+                                   bool mostrarCoordinado, bool mostrarHoraFinalizado, bool mostrarTextoTiempoClienteTerceros,
+                                   bool mostrarTiempoPromedioAsistencias
+                                   ) const;
 
     Q_INVOKABLE QString nuevoCodigoFiltro()const;
 
