@@ -161,7 +161,7 @@ QString ModuloReportes::generarReporte(QString _whereDinamico,bool _soloCuadroRe
         QString _consultaCausasExternasTotalesHardware="select count(*) from Reclamos REC where REC.causaAtribuida!='SISTECO' and REC.codigoArea=1 ";
         QString _consultaCantidadReclamosHardware="select count(*) from Reclamos REC where 1=1 and REC.codigoArea=1 ";
         QString _consultaCantidadReclamosSoftware="select count(*) from Reclamos REC where 1=1 and REC.codigoArea=2 ";
-        QString _consultaAniosSeleccionados=" select REC.codigoAnio as 'Anio'  from Reclamos  REC where 1=1 ";
+        QString _consultaAniosSeleccionados=" select sub.Anio from ( select REC.codigoAnio as 'Anio'  from Reclamos  REC where 1=1 ";
         QString _consultaDetalleDeCausasExternasTotales="select REC.codigoCausa, sum(1),REC.nombreCausa  from Reclamos REC where REC.causaAtribuida!='SISTECO' ";
         QString _consultaDetalleDeCausasClienteYSucursales="select REC.codigoCausa, sum(1), REC.codigoCliente,REC.razonCliente,REC.codigoSucursal,REC.nombreSucursal  from Reclamos REC where REC.causaAtribuida!='SISTECO' ";
         QString _consultaAsistenciasSegunTiempoResolucion= _consultaSegunAsistenciaResolucion; //"SELECT sum(1), case when tiempoResolucion<=239 then 'Menos de 4 hrs' WHEN tiempoResolucion>239 and tiempoResolucion<=479 THEN 'Entre 4 y 8 hrs'    else 'La incidencia reportada necesitó análisis de desarrollo'  end ,tiempoResolucion, sum(tiempoResolucion)  FROM Reclamos REC  where 1=1 ";
@@ -176,7 +176,7 @@ QString ModuloReportes::generarReporte(QString _whereDinamico,bool _soloCuadroRe
         QString _groupByCodigoReclamo=" group by REC.codigoReclamo order by REC.codigoReclamo ";
         QString _groupByConsultaClientes=" group by REC.codigoCliente order by REC.razonCliente ";
         QString _groupByConsultaSucursales=" group by REC.codigoSucursal order by REC.codigoSucursal ";
-        QString _groupByAniosSeleccionados=" group by REC.codigoAnio order by REC.codigoAnio ";
+        QString _groupByAniosSeleccionados=" ) sub group by sub.Anio order by sub.Anio "; // " group by REC.codigoAnio order by REC.codigoAnio ";
         QString _consultaMesesSeleccionados=" select REC.nombreMes as 'Mes'  from Reclamos  REC where 1=1 ";
         QString _groupByMesesSeleccionados=" group by REC.codigoMes order by REC.codigoMes ";
         QString _groupByCausasExternas=" group by REC.codigoCausa order by 2 desc ";
@@ -187,6 +187,9 @@ QString ModuloReportes::generarReporte(QString _whereDinamico,bool _soloCuadroRe
       //  qDebug()<< _consultaAniosSeleccionadosDemo.append(_whereDinamico).append(_groupByAniosSeleccionados);
 
         QSqlQuery queryAnios = Database::consultaSql(_consultaAniosSeleccionados.append(_whereDinamico).append(_groupByAniosSeleccionados),"local");
+
+
+
         QSqlQuery queryClientes = Database::consultaSql(_consultaClientesSeleccionados.append(_whereDinamico).append(_groupByConsultaClientes),"local");
         QSqlQuery queryMeses;
 
@@ -244,7 +247,12 @@ QString ModuloReportes::generarReporte(QString _whereDinamico,bool _soloCuadroRe
         out << "\n<div class=\"listaClientesCabezal\"  align=\"left\">";
 
         while(queryClientes.next()){
-            out << queryClientes.value(0).toString()+" - ";
+            out << queryClientes.value(0).toString();
+            if(queryClientes.next()){
+                queryClientes.previous();
+                out << " - ";
+            }
+
         }
         out << "</div>";
 
@@ -261,7 +269,11 @@ QString ModuloReportes::generarReporte(QString _whereDinamico,bool _soloCuadroRe
             queryMeses = Database::consultaSql(consultaMeses.append(_whereDinamico).append(" and REC.codigoAnio='"+queryAnios.value(0).toString()+"' ").append(_groupByMesesSeleccionados),"local");
 
             while(queryMeses.next()){
-                out << queryMeses.value(0).toString()+" - ";
+                out << queryMeses.value(0).toString();
+                if(queryMeses.next()){
+                    queryMeses.previous();
+                    out << " - ";
+                }
             }
             queryMeses.clear();
             out << "</div>";
@@ -1136,7 +1148,16 @@ QString ModuloReportes::retornaNombreReportePDF(QString _whereDinamico) const {
 
 
         ///Años a mostrar
-        _nombreReportePDF+=queryAnios.value(0).toString();
+
+        queryAnios.previous();
+        while(queryAnios.next()){
+            _nombreReportePDF+=queryAnios.value(0).toString();
+            if(queryAnios.next()){
+                _nombreReportePDF+="-";
+                queryAnios.previous();
+            }
+        }
+
 
         return _nombreReportePDF+".pdf";
 

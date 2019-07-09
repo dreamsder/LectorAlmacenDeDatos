@@ -57,7 +57,7 @@ Rectangle {
                                    +"sum(REC.tiempoResolucion)'tiempoResolucion', ";
 
 
-    property string _version: "1.17.0 - 24/06/2019"
+    property string _version: "1.17.1 - 08/07/2019"
     /// 0.44.0 - Se agrega el control de tolerancia de 10 minutos.
     /// 0.47.0 - Se agrego en la lista de botones, los registros que seleccionamos en el filtro anterior.
     /// 0.47.1 - Se corrige un error en el filtro de numero de reclamos.
@@ -117,6 +117,7 @@ Rectangle {
     /// 1.15.2 - 05/06/2018 - Se corrigen las url que apuntan a madai.
     /// 1.16.0 - 04/09/2018 - Se agrega configuración para mostrar u ocultar información de reclamo coordinado, fecha fin del reclamo y nota al pie con información sobre espera respuesta del cliente(variable %tc%).
     /// 1.17.0 - 24/06/2019 - Se agrega una columna "Tiempo promedio asistencia" en el reporte, configurable por filtro/perfil.
+    /// 1.17.1 - 08/07/2019 - Corrección sobre el reporte, se arregla el cartel de los meses y años, y también en el guardado del archivo.pdf.
     property string orden:"ascendente"
 
     ListModel{
